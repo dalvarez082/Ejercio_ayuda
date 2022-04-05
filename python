@@ -1,0 +1,39 @@
+import random
+lista_amigo = ["Tola", "Carolina", "Catalina", "Hector", "Luis"]
+lista_dinero = []
+lista_tandasG = [0,0,0,0,0]
+##########################################
+a = 0
+b = 0
+while a < 4:
+    lista_ganadores = []
+    lista_tandasJ = []
+    for p in range (len(lista_amigo)):
+        repeticiones_lanzamiento = 0
+        for i in range (5):
+            lanzamientos =0
+            for j in range(3):
+                dado = random.randint(1, 6)
+                lanzamientos = lanzamientos + dado
+            repeticiones_lanzamiento = repeticiones_lanzamiento +lanzamientos
+        lista_tandasJ.append(repeticiones_lanzamiento)
+
+
+    print(lista_tandasJ, " Estos son sus numeros")
+    for i in range(len(lista_tandasJ)):
+        if max(lista_tandasJ) == int(lista_tandasJ[i]):
+            lista_ganadores.append(i)
+
+    print(lista_ganadores," Estos son los ganadores")
+    for i in range (len(lista_ganadores)):
+        lista_tandasG[lista_ganadores[i]] = lista_tandasG[lista_ganadores[i]] + 1
+
+    print("aqui vamos a imprimir el dinero de la bandeja")
+    print(lista_tandasG, "ya sume los ganadores")
+    b = b + 1
+    print("tanda #:", b)
+    print("----------------------------------------------------")
+    if 3 in lista_tandasG:
+        a = 4
+
+
