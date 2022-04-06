@@ -1,0 +1,118 @@
+import random
+
+lista_amigo = ["TOLA", "CAROLINA", "CATALINA", "HECTOR", "LUIS"]
+lista_dinero = [-2000, -2000, -2000, -2000, -2000]
+lista_tandasG = [0, 0, 0, 0, 0]
+bandeja = 10000
+ganador = 0
+perdedores = []
+dinero_ganador = 0
+##########################################
+a = 0
+b = 0
+while a != 3:
+    lista_ganadores = []
+    lista_perdedores = []
+    lista_tandasJ = []
+    for p in range(len(lista_amigo)):
+        repeticiones_lanzamiento = 0
+        for i in range(5):
+            lanzamientos = 0
+            for j in range(3):
+                dado = random.randint(1, 6)
+                lanzamientos = lanzamientos + dado
+            repeticiones_lanzamiento = repeticiones_lanzamiento + lanzamientos
+        lista_tandasJ.append(repeticiones_lanzamiento)
+
+### aqui guardo los perdedores de cada tanda
+    for i in range(len(lista_tandasJ)):
+        if max(lista_tandasJ) != int(lista_tandasJ[i]):
+            lista_perdedores.append(i)
+
+#### aqui guardo  los ganadores de cada tanda
+    print("******** Puntuaciones obtenidas ******* ")
+    print("Tola:", lista_tandasJ[0])
+    print("Carolina:", lista_tandasJ[1])
+    print("Catalina:", lista_tandasJ[2])
+    print("Hector:", lista_tandasJ[3])
+    print("Luis:", lista_tandasJ[4])
+    print("****** GANADORES ****** ")
+
+    for i in range(len(lista_tandasJ)):
+        if max(lista_tandasJ) == int(lista_tandasJ[i]):
+            lista_ganadores.append(i)
+
+### aqui verifico la cantidad de ganadores y le asigno el dinero
+    for i in range (len(lista_ganadores)):
+        suma_bandeja = 5000 / len(lista_ganadores)
+        if len(lista_ganadores) > 1:
+            sumar_dinero = (len(lista_perdedores) * 1200) / len(lista_ganadores)
+            lista_dinero[lista_ganadores[i]] = lista_dinero[lista_ganadores[i]] + sumar_dinero + suma_bandeja
+        else :
+            sumar_dinero = (len(lista_perdedores) * 1000) / len(lista_ganadores)
+            lista_dinero[lista_ganadores[i]] = lista_dinero[lista_ganadores[i]] + sumar_dinero + suma_bandeja
+
+    bandeja = bandeja - 5000
+
+### le resto el dinero a los perdedores dependiendo del numero de ganadores
+    for i in range(len(lista_perdedores)):
+        if len(lista_ganadores) > 1:
+            lista_dinero[lista_perdedores[i]] = lista_dinero[lista_perdedores[i]] - 1200
+        else:
+            lista_dinero[lista_perdedores[i]] = lista_dinero[lista_perdedores[i]] - 1000
+
+
+
+#### esta parte le suma 1 unidad a los jugadores que ganaron
+
+    for i in range(len(lista_ganadores)):
+        lista_tandasG[lista_ganadores[i]] = lista_tandasG[lista_ganadores[i]] + 1
+
+####  aqui le sumo 5000 despues del primer juego
+    if b > 0:
+        bandeja = bandeja + 5000
+
+#### aqui le quitaremos 1000 a cada jugador para continuar
+    for i in range (len(lista_dinero)):
+        lista_dinero[i] = lista_dinero[i] - 1000
+
+    b = b + 1
+
+ ##### aqui vamos a imprimir todo el suceso del juego
+    for i in range(len(lista_ganadores)):
+        print(lista_amigo[lista_ganadores[i]])
+    print("****** PERDEDORES ******")
+    for i in range (len(lista_perdedores)):
+        print(lista_amigo[lista_perdedores[i]])
+    print("****** BALANCE DE DINERO ******")
+    print("Tola:", lista_dinero[0])
+    print("Carolina:", lista_dinero[1])
+    print("Catalina:", lista_dinero[2])
+    print("Hector:", lista_dinero[3])
+    print("Luis:", lista_dinero[4])
+    print("****** DINERO EN LA BANDEJA ******")
+    print("Dinero:", bandeja)
+    print("****** BALANCE DE PARTIDAS JUGADAS ******")
+    print("Tola:", lista_tandasG[0], "Carolina:", lista_tandasG[1], "Catalina:", lista_tandasG[2], "Hector:",lista_tandasG[3], "Luis:", lista_tandasG[4])
+    print("TANDA #:", b)
+    print("-----------------------------------------------------------------------------------------------------")
+    if 3 in lista_tandasG:
+        a = 3
+
+### aqui el juego ya ha terminado y se procede a mostrar los resultados
+
+print("****** RESULTADO FINAL ******")
+
+for i in range(len(lista_tandasG)):
+    if max(lista_tandasG) == lista_tandasG[i]:
+        ganador = i
+
+for i in range(len(lista_dinero)):
+    if min(lista_dinero) == lista_dinero[i]:
+        perdedores.append(lista_amigo[i])
+
+print("GANADOR:", lista_amigo[ganador])
+print("DINERO GANADOR:", (lista_dinero[ganador] + 5000))
+print("JUGADOR QUE MAS DINERO OBTUVO:", lista_amigo[ganador])
+for i in perdedores : print("JUGADOR QUE MAS DINERO PERDIERON:",i)
+print("-----------------------------------------------------------------------------------------------------")
